@@ -1,0 +1,448 @@
+#include <iostream>
+#include <vector>
+#include <random>
+
+// Define the structure of a territory
+struct Territory {
+    int id;
+    bool occupied;
+    int occupyingPlayer;
+    int armyCount;
+};
+
+// Define the structure of a player
+struct Player {
+    int id;
+    int armyTokens;
+    std::vector<int> territories;
+};
+
+// Define the game board
+class GameBoard {
+public:
+    GameBoard(int numTerritories);
+    void placeArmy(int playerId, int territoryId);
+    void attack(int attackerPlayerId, int attackingTerritoryId, int defendingPlayerId, int defendingTerritoryId, int numArmies);
+    void endTurn();
+    bool isGameOver();
+    int getWinner();
+private:
+    std::vector<Territory> territories;
+    std::vector<Player> players;
+    int currentPlayer;
+    int numTerritoriesToOccupy;
+    std::mt19937 rng;
+
+    void initializeTerritories(int numTerritories);
+    void initializePlayers(int numPlayers);
+    void distributeArmyTokens();
+    void rollDice(int numArmies, int playerId, int& attackerRoll, int& defenderRoll);
+    bool isValidAttack(int attackerPlayerId, int attackingTerritoryId, int defendingPlayerId, int defendingTerritoryId);
+};
+
+GameBoard::GameBoard(int numTerritories) : numTerritoriesToOccupy(5), rng(std::random_device()()) {
+    initializeTerritories(numTerritories);
+    initializePlayers(2); // For simplicity, we only allow 2 players
+    distributeArmyTokens();
+}
+
+void GameBoard::initializeTerritories(int numTerritories) {
+    territories.resize(numTerritories);
+     for (int i = 0; i< numTerritories; i++) {
+        territories[i] = {i, false, -1, 0};
+    }
+}
+
+void GameBoard::initializePlayers(int numPlayers) {
+    players.resize(numPlayers);
+    for (int i = 0; i < numPlayers; i++) {
+        players[i] = {i, 10, {}};
+    }
+    currentPlayer = rng() % numPlayers;
+}
+
+void GameBoard::distributeArmyTokens() {
+    for (int i = 0; i < 10; i++) {
+        players[currentPlayer].armyTokens++;
+        placeArmy(currentPlayer, rng() % numTerritoriesToOccupy);
+    }
+}
+
+void GameBoard::placeArmy(int playerId, int territoryId) {
+    if (!territories[territoryId].occupied || territories[territoryId].occupyingPlayer == playerId) {
+        territories[territoryId].occupied = true;
+        territories[territoryId].occupyingPlayer = playerId;
+        territories[territoryId].armyCount++;
+        players[playerId].territories.push_back(territoryId);
+    }
+    }
+
+void GameBoard::attack(int attackerPlayerId, int attackingTerritoryId, int defendingPlayerId, int defendingTerritoryId, int numArmies) {
+    if (!isValidAttack(attackerPlayerId, attackingTerritoryId, defendingPlayerId, defendingTerritoryId)) {
+        std::cout << "Invalid attack" << std::endl;
+        return;
+    }
+
+    int attackerRoll, defenderRoll;
+    rollDice(numArmies, attackerPlayerId, attackerRoll, defenderRoll);
+
+    if (attackerRoll > defenderRoll) {
+        territories[defendingTerritoryId].armyCount -= numArmies;
+        if (territories[defendingTerritoryId].armyCount == 0) {
+            territories[defendingTerritoryId].occupyingPlayer = attackerPlayerId;
+           players[attackerPlayerId].territories.push_back(defendingTerritoryId);
+           players[defendingPlayerId].territories.erase(std::remove(players[defendingPlayerId].territories.begin(), players[defendingPlayerId].territories.end(), defendingTerritoryId), players[defendingPlayerId].territories.end());
+        }
+    }
+}
+
+void GameBoard::rollDice(int numArmies, int playerId, int& attackerRoll, int& defenderRoll) {
+    std::uniform_int_distribution<int> dist(1, 3);
+    attackerRoll = 0;
+    defenderRoll = 0;
+    for (int i = 0; i < numArmies; i++) {
+        attackerRoll += dist(rng);
+        defenderRoll += dist(rng);
+    }
+}
+bool GameBoard::isValidAttack(int attackerPlayerId, int attackingTerritoryId, int defendingPlayerId, int defendingTerritoryId) {
+    if (attackingTerritoryId == defendingTerritoryId) {
+        return false;
+    }
+
+    int attackingTerritoryPlayerId = territories[attackingTerritoryId].occupyingPlayer;
+    int defendingTerritoryPlayerId = territories[defendingTerritoryId].occupyingPlayer;
+
+    if (attackingTerritoryPlayerId != attackerPlayerId) {
+        return false;
+    }
+       if (defendingTerritoryPlayerId == -1 || defendingTerritoryPlayerId == attackerPlayerId) {
+        return false;
+    }
+
+    return true;
+}
+
+void GameBoard::endTurn() {
+    for (int i = 0; i < players[currentPlayer].territories.size(); i++) {
+        int territoryId = players[currentPlayer].territories[i];
+        territories[territoryId].armyCount++;
+    }
+
+    currentPlayer = (currentPlayer + 1) % players.size();
+}
+
+bool GameBoard::isGameOver() {
+    int numPlayersWith5Territories = 0;
+   for (int i = 0; i < players.size(); i++) {
+        if (players[i].territories.size() >= numTerritoriesToOccupy) {
+            numPlayersWith5Territories++;
+        }
+    }
+
+    return numPlayersWith5Territories > 1;
+}
+
+int GameBoard::getWinner() {
+    for (int i = 0; i < players.size(); i++) {
+        if (players[i].territories.size() >= numTerritoriesToOccupy) {
+            return players[i].id;
+        }
+    }
+
+    return -1;
+}
+
+int main() {
+    GameBoard game(7);
+
+    while (!game.isGameOver()) {
+        std::cout << "Player " << game.currentPlayer << " turn" << std::endl;
+        std::cout << "Choose an adjacent territory to attack" << std::endl;
+        int attackingTerritoryId, defendingTerritoryId;
+        std::cin >> attackingTerritoryId >> defendingTerritoryId;
+
+        std::cout << "Choose the number of armies to attack with" << std::endl;
+        int numArmies;
+        std::cin >> numArmies;
+
+        game.attack(game.currentPlayer, attackingTerritoryId, game.territories[attackingTerritoryId].occupyingPlayer, defendingTerritoryId, numArmies);
+
+        game.endTurn();
+    }
+    std::cout << "Player " << game.getWinner() << " wins!" << std::endl;
+
+    return 0;
+}
+
+
+player 
+------
+
+Infantry* infantry = new Infantry[10]; 
+    Cavalry* cavalry = new Cavalry[3];     
+    Artillery* artillery = new Artillery[2];
+    tokens[0] = infantry;
+    tokens[1] = cavalry;
+    tokens[2] = artillery;
+    troopStrength = 0;
+    for (int i = 0; i < 10; ++i) {
+        troopStrength += tokens[0][i].getTroopValue();
+    }
+    for (int i = 0; i < 3; ++i) {
+        troopStrength += tokens[1][i].getTroopValue();
+    }
+    for (int i = 0; i < 2; ++i) {
+        troopStrength += tokens[2][i].getTroopValue();
+    }
+
+
+
+//  This is new 1 ------------------------------------------------------------------
+
+
+
+#include "Game.h"
+
+Game::Game() : countPlayers(0), players(nullptr) {}
+
+Game::~Game() {
+    delete[] players; // Clean up memory allocated for players
+}
+
+void Game::setPlayers(int countPlayers) {
+    this->countPlayers = countPlayers;
+    players = new Player[countPlayers]; // Allocate memory for players array
+    cout << endl;
+    for (int i = 0; i < countPlayers; i++) {
+        string name, color = "color"; // Assuming a default color for now
+        cout << "Enter name for Player " << i + 1 << ": ";
+        cin >> name;
+        players[i].setUser(name, color, i + 1); // Initialize each player
+        cout << players[i].getName() << endl;
+    }
+}
+
+void Game::showBoard() const {
+    gameboard.drawBoard(); // Draw the game board
+}
+
+void Game::chooseColor() {
+    // Allow players to choose colors
+    for (int i = 0; i < countPlayers; ++i) {
+        cout << "Player " << i + 1 << " choose a color: ";
+        string color;
+        cin >> color;
+        players[i].setColor(color);
+    }
+}
+
+void Game::displayPlayerInfo() const {
+    // Display information for each player
+    for (int i = 0; i < countPlayers; ++i) {
+        cout << "Player " << i + 1 << " info:\n";
+        players[i].displayInfo();
+    }
+}
+
+void Game::placeArmy() {
+    // Place armies for each player
+    int occupied = 0;
+    while (occupied < 7) {
+        cout << "total to be occupied is: " << 7 - occupied << endl;
+        for (int i = 0; i < countPlayers; ++i) {
+            int choice;
+            cout << endl;
+            cout << players[i].getName() << " Choose your Territory to occupy" << endl;
+            cout << "1. QLD 2. NSW 3. VIC 4. SA 5. WA 6. TAS 7. NT" << endl;
+            bool validChoice = false;
+            while (!validChoice) {
+                cin >> choice;
+                if (choice > 7 || choice < 1 || gameboard.checkTerritory(choice) == 1) {
+                    cout << "Invalid or already occupied. Please choose again" << endl;
+                }
+                else {
+                    gameboard.setTerritory(choice, i + 1);
+                    list<Token> tokenlist = players[i].placeArmy(choice);
+                    gameboard.setArmy(choice, tokenlist);
+                    validChoice = true;
+                }
+            }
+            occupied++;
+            cout << "total occupied is: " << occupied << endl;
+            cout << endl;
+            if (occupied == 7) break;
+        }
+    }
+}
+
+void Game::play() {
+    cout << "Game started" << endl;
+    bool endgame = false;
+
+    while (!endgame) {
+        for (int i = 0; i < countPlayers; i++) {
+            cout << "Player " << players[i].getName() << ", choose your option: \n";
+            cout << "1. Attack\n";
+            cout << "2. Pass\n";
+            cout << "3. End game\n";
+
+            int choice;
+            cin >> choice;
+
+            switch (choice) {
+            case 1:
+                // Implement attack logic here
+                break;
+            case 2:
+                cout << "Player " << players[i].getName() << " has passed.\n";
+                break;
+            case 3:
+                cout << "Player " << players[i].getName() << " has ended the game.\n";
+                endgame = true;
+                break;
+            default:
+                cout << "Invalid choice. Please choose again.\n";
+                break;
+            }
+
+            if (endgame)
+                break;
+        }
+    }
+}
+
+void Game::results() const {
+    cout << "Game ended" << endl;
+    // Display game results
+}
+
+
+//This is new 2 --------------------------------------------------------------------
+
+#include "Game.h"
+#include <iostream> // Include for cout, cin, endl
+#include <string>   // Include for string
+#include <list>     // Include for list
+#include "Token.h" // Assuming Token class is defined in Token.h
+
+using namespace std;
+
+Game::Game() : countPlayers(0), players(nullptr) {}
+
+Game::~Game() {
+    delete[] players; // Clean up memory allocated for players
+}
+
+void Game::setPlayers(int countPlayers) {
+    this->countPlayers = countPlayers;
+    players = new Player[countPlayers]; // Allocate memory for players array
+    cout << endl;
+    for (int i = 0; i < countPlayers; i++) {
+        string name, color = "color"; // Assuming a default color for now
+        cout << "Enter name for Player " << i + 1 << ": ";
+        cin >> name;
+        players[i].setUser(name, color, i + 1); // Initialize each player
+        cout << players[i].getName() << endl;
+    }
+}
+
+void Game::showBoard() const {
+    // Assuming gameboard is an object of a class that implements drawBoard() method
+    // Implement code to draw the game board here
+}
+
+void Game::chooseColor() {
+    // Allow players to choose colors
+    for (int i = 0; i < countPlayers; ++i) {
+        cout << "Player " << i + 1 << " choose a color: ";
+        string color;
+        cin >> color;
+        players[i].setColor(color);
+    }
+}
+
+void Game::displayPlayerInfo() const {
+    // Display information for each player
+    for (int i = 0; i < countPlayers; ++i) {
+        cout << "Player " << i + 1 << " info:\n";
+        players[i].displayInfo();
+    }
+}
+
+void Game::placeArmy() {
+    // Place armies for each player
+    int occupied = 0;
+    while (occupied < 7) {
+        cout << "total to be occupied is: " << 7 - occupied << endl;
+        for (int i = 0; i < countPlayers; ++i) {
+            int choice;
+            cout << endl;
+            cout << players[i].getName() << " Choose your Territory to occupy" << endl;
+            cout << "1. QLD 2. NSW 3. VIC 4. SA 5. WA 6. TAS 7. NT" << endl;
+            bool validChoice = false;
+            while (!validChoice) {
+                cin >> choice;
+                if (choice > 7 || choice < 1 || gameboard.checkTerritory(choice) == 1) {
+                    cout << "Invalid or already occupied. Please choose again" << endl;
+                }
+                else {
+                    gameboard.setTerritory(choice, i + 1);
+                    list<Token> tokenlist = players[i].placeArmy(choice);
+                    gameboard.setArmy(choice, tokenlist);
+                    validChoice = true;
+                }
+            }
+            occupied++;
+            cout << "total occupied is: " << occupied << endl;
+            cout << endl;
+            if (occupied == 7) break;
+        }
+    }
+}
+
+void Game::play() {
+    cout << "Game started" << endl;
+    bool endgame = false;
+
+    while (!endgame) {
+        for (int i = 0; i < countPlayers; i++) {
+            cout << "Player " << players[i].getName() << ", choose your option: \n";
+            cout << "1. Attack\n";
+            cout << "2. Pass\n";
+            cout << "3. End game\n";
+
+            int choice;
+            cin >> choice;
+
+            switch (choice) {
+            case 1:
+                // Implement attack logic here
+                break;
+            case 2:
+                cout << "Player " << players[i].getName() << " has passed.\n";
+                break;
+            case 3:
+                cout << "Player " << players[i].getName() << " has ended the game.\n";
+                endgame = true;
+                break;
+            default:
+                cout << "Invalid choice. Please choose again.\n";
+                break;
+            }
+
+            if (endgame)
+                break;
+        }
+    }
+}
+
+void Game::results() const {
+    cout << "Game ended" << endl;
+    // Display game results
+}
+this is updated one
+
+
+
+taskkill /F /IM riskGame.exe

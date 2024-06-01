@@ -1,0 +1,42 @@
+Game Statistics
+----------------
+Total number of games played: 1
+Total number of players generated: 1
+Maximum number of players generated for a game: 2
+Minimum number of players generated for a game: 2
+Average number of players generated for a game: 1
+Winning Frequency: 
+Name: hi, Winning Count: 1
+Maximum number of rounds played in a game: 1
+Minimum number of rounds played in a game: 1
+Average number of rounds played in a game: 1
+
+
+Game Statistics
+----------------
+Total number of games played: 1
+Total number of players generated: 1
+Maximum number of players generated for a game: 2
+Minimum number of players generated for a game: 2
+Average number of players generated for a game: 1
+Winning Frequency: 
+Name: Shiv, Winning Count: 1
+Maximum number of rounds played in a game: 3
+Minimum number of rounds played in a game: 3
+Average number of rounds played in a game: 3
+
+
+Game Statistics
+----------------
+Total number of games played: 2
+Total number of players generated: 1
+Maximum number of players generated for a game: 2
+Minimum number of players generated for a game: 2
+Average number of players generated for a game: 1
+Winning Frequency: 
+Name: green, Winning Count: 1
+Maximum number of rounds played in a game: 2
+Minimum number of rounds played in a game: 2
+Average number of rounds played in a game: 1
+
+

@@ -1,0 +1,406 @@
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 45
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 40
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 30
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 35
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 40
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 35
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 35
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 40
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 30
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 40
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: hi
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 18
+
+
+Player Name: hello
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 21
+
+
+Player Name: Shiv
+Player Color: Red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: Mustaaq
+Player Color: Green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
+Player Name: red
+Player Color: red
+Player ID: 1
+Number of Territories: 4
+Troop Strength: 50
+
+
+Player Name: green
+Player Color: green
+Player ID: 2
+Number of Territories: 3
+Troop Strength: 50
+
+
